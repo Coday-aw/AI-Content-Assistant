@@ -9,7 +9,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddControllers();
 
-builder.Services.AddHttpClient<IGroqApiService, GroqApiService>();
+builder.Services.AddHttpClient<IProxyApiService, ProxyApiService>();
 
 var app = builder.Build();
 

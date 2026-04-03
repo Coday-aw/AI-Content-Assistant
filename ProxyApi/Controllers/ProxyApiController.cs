@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace LLM_Api.Controllers;
 
 [Controller]
-[Route("api/llama")]
-public class GroqApiController : ControllerBase
+[Route("api/llmProxy")]
+public class ProxyApiController : ControllerBase
 {
-    private readonly IGroqApiService _groqApiService;
+    private readonly IProxyApiService _proxyApiService;
 
-    public GroqApiController(IGroqApiService groqApiService)
+    public ProxyApiController(IProxyApiService proxyApiService)
     {
-        _groqApiService = groqApiService;
+        _proxyApiService = proxyApiService;
     }
 
     [HttpPost]
     public async Task<ActionResult<ResponseDto>> CreateGenerateMessage([FromBody] string message)
     {
-        var response = await _groqApiService.GetChatResponseAsync(message);
+        var response = await _proxyApiService.GetChatResponseAsync(message);
         return Ok(response);
     }
 }

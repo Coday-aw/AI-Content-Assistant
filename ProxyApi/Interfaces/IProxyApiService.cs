@@ -3,7 +3,7 @@ using LLM_Api.Models;
 
 namespace LLM_Api.Interfaces;
 
-public interface IGroqApiService
+public interface IProxyApiService
 {
     Task<ResponseDto> GetChatResponseAsync(string userMessage);
 }

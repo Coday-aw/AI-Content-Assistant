@@ -1,6 +1,6 @@
 namespace LLM_Api.Models;
 
-public class OpenAiResponse
+public class ProxyApiResponse
 {
     public Choice[]  choices { get; set; }
     public Usage  usage { get; set; }

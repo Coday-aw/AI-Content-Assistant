@@ -7,13 +7,13 @@ using LLM_Api.Models;
 
 namespace LLM_Api.Services;
 
-public class GroqApiService : IGroqApiService
+public class ProxyApiService : IProxyApiService
 {
     private readonly HttpClient _httpClient;
     private readonly string _apiKey;
     private readonly string _modelName;
 
-    public GroqApiService(HttpClient httpClient, IConfiguration config)
+    public ProxyApiService(HttpClient httpClient, IConfiguration config)
     {
         _httpClient = httpClient;
         _apiKey = config["Llama:ApiKey"];
@@ -48,7 +48,7 @@ public class GroqApiService : IGroqApiService
          
         var json = await response.Content.ReadAsStringAsync();
         
-        var result = JsonSerializer.Deserialize<OpenAiResponse>(json);
+        var result = JsonSerializer.Deserialize<ProxyApiResponse>(json);
         
         if (result == null)
         {
