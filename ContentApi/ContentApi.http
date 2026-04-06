@@ -1,0 +1,21 @@
+@K4U2_HostAddress = http://localhost:5169
+
+GET {{K4U2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{K4U2_HostAddress}}/api/ContentApi
+Content-Type: application/json
+
+{
+  "message": "vilket är det snabbaste djuret på land?",
+  "category": "djur"
+}
+
+### 
+GET {{K4U2_HostAddress}}/api/ContentApi
+Accept: application/json
+
+### 
+DELETE {{K4U2_HostAddress}}/api/ContentApi/1
