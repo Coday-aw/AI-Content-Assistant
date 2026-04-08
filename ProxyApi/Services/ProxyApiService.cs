@@ -10,14 +10,14 @@ namespace LLM_Api.Services;
 public class ProxyApiService : IProxyApiService
 {
     private readonly HttpClient _httpClient;
-    private readonly string _apiKey;
-    private readonly string _modelName;
+    private readonly string? _apiKey;
+    private readonly string? _modelName;
 
     public ProxyApiService(HttpClient httpClient, IConfiguration config)
     {
         _httpClient = httpClient;
-        _apiKey = config["Llama:ApiKey"];
-        _modelName = config["Llama:ModelName"];
+        _apiKey = config["ProxyApi:ApiKey"];
+        _modelName = config["ProxyApi:ModelName"];
     }
 
     public async Task<ResponseDto> GetChatResponseAsync(string userMessage)

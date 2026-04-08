@@ -9,8 +9,7 @@ POST {{K4U2_HostAddress}}/api/ContentApi
 Content-Type: application/json
 
 {
-  "message": "vilket är det snabbaste djuret på land?",
-  "category": "djur"
+  "message": ""
 }
 
 ### 

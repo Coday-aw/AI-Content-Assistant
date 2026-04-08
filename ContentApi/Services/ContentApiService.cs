@@ -1,4 +1,5 @@
 using K4U2.DTOs;
+using K4U2.Exceptions;
 using K4U2.Interfaces;
 using K4U2.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,6 @@ public class ContentApiService : IContentApiService
 
     public async Task<List<ResponseDto>> GetPromptHistoryAsync(string ? category)
     {
-        
         // get prompt history from repository put them in query
         var query = await _repository.GetPromptHistoryAsync();
         
@@ -40,8 +40,8 @@ public class ContentApiService : IContentApiService
         // get the result 
         var result = await httpResponse.Content.ReadFromJsonAsync<LlmResponseDto>();
         // make sure result is not null
-        if (result is null)
-         throw new Exception("Error getting message");
+        if (result == null)
+         throw new ProxyApiUnavailableException("Api is not available", null);
         // create new prompt history entity
         var newPromptHistory = new PromptHistory
         {

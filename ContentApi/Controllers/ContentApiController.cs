@@ -17,6 +17,9 @@ public class ContentApiController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ResponseDto>> CreatePromptHistoryAsync([FromBody] RequestDto dto)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var response = await _contentApiService.CreatePromptHistoryAsync(dto);
         return Ok(response);
     }
