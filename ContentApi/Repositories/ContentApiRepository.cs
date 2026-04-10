@@ -1,4 +1,5 @@
 using K4U2.Data;
+using K4U2.Exceptions;
 using K4U2.Interfaces;
 using K4U2.Models;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ public class ContentApiRepository : IContentApiRepository
         var prompt = await _dbContext.PromptHistories.FirstOrDefaultAsync(p => p.Id == id);
 
         if (prompt == null)
-            throw new Exception("Prompt not found");
+            throw new NotFoundException("Prompt not found");
         _dbContext.PromptHistories.Remove(prompt);
         
         await _dbContext.SaveChangesAsync();

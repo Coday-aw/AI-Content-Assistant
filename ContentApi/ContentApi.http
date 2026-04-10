@@ -9,7 +9,8 @@ POST {{K4U2_HostAddress}}/api/ContentApi
 Content-Type: application/json
 
 {
-  "message": ""
+  "message": "hur gammal kan ett bi bli?",
+  "category": "djur"
 }
 
 ### 
@@ -17,4 +18,4 @@ GET {{K4U2_HostAddress}}/api/ContentApi
 Accept: application/json
 
 ### 
-DELETE {{K4U2_HostAddress}}/api/ContentApi/1
+DELETE {{K4U2_HostAddress}}/api/ContentApi

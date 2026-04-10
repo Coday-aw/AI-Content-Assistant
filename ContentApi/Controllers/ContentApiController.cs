@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace K4U2.Controllers;
 
 [Route("api/[controller]")]
+[ApiController]
 public class ContentApiController : ControllerBase
 {
     private readonly IContentApiService _contentApiService;
@@ -25,13 +26,13 @@ public class ContentApiController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ResponseDto>> GetPromptHistoryAsync(string? category)
+    public async Task<ActionResult<ResponseDto>> GetPromptHistoryAsync([FromQuery]string? category)
     {
         var response = await _contentApiService.GetPromptHistoryAsync(category);
         return Ok(response);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePromptHistoryAsync(int id) 
     {
         await _contentApiService.DeletePromptHistoryAsync(id);
