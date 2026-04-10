@@ -1,7 +1,7 @@
 @LLM_Api_HostAddress = http://localhost:5112
 ###
 
-POST {{LLM_Api_HostAddress}}/api/llmProxy
+POST {{LLM_Api_HostAddress}}/api/proxyllm
 Content-Type: application/json
 
 "hur många männsikor lever i sverige"

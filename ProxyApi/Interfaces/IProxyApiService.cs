@@ -5,5 +5,5 @@ namespace LLM_Api.Interfaces;
 
 public interface IProxyApiService
 {
-    Task<ResponseDto> GetChatResponseAsync(string userMessage);
+    Task<ResponseDto> GetChatResponseAsync(string userMessage,  string apiKey);
 }

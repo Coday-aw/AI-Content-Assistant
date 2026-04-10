@@ -12,16 +12,25 @@ public class ProxyApiService : IProxyApiService
     private readonly HttpClient _httpClient;
     private readonly string? _apiKey;
     private readonly string? _modelName;
+    private readonly string? _secretKey;
 
     public ProxyApiService(HttpClient httpClient, IConfiguration config)
     {
         _httpClient = httpClient;
         _apiKey = config["ProxyApi:ApiKey"];
         _modelName = config["ProxyApi:ModelName"];
+        _secretKey = config["ProxyApi:SecretKey"];
     }
 
-    public async Task<ResponseDto> GetChatResponseAsync(string userMessage)
+    public async Task<ResponseDto> GetChatResponseAsync(string userMessage,  string apiKey)
     {
+        if (string.IsNullOrEmpty(apiKey))
+            throw new ArgumentNullException(nameof(apiKey), "API Key cannot be null or empty");
+        var secretKey = _secretKey;
+        
+        if(apiKey != secretKey)
+            throw new ArgumentException("invalid API Key");
+        
         var requestBody = new
         {
             model = _modelName,

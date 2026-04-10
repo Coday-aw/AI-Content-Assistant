@@ -40,7 +40,8 @@ public class ContentApiService : IContentApiService
         LlmResponseDto? result;
         try
         {
-           _httpClient.DefaultRequestHeaders.Add("ApiKey", _secretKey);
+            // send secret key in head 
+            _httpClient.DefaultRequestHeaders.Add("ApiKey", _secretKey);
             // post to the proxy api 
             var httpResponse = await _httpClient.PostAsJsonAsync("api/proxyllm",  message);
             // make sure the response is successful 
@@ -75,6 +76,4 @@ public class ContentApiService : IContentApiService
     {
         return await _repository.DeletePromptHistoryAsync(id);
     }
-
-
 }
