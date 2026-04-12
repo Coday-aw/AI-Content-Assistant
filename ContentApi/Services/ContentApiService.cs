@@ -20,7 +20,7 @@ public class ContentApiService : IContentApiService
         _secretKey = config["ProxyApi:SecretKey"];
     }
 
-    public async Task<List<ResponseDto>> GetPromptHistoryAsync(string ? category)
+    public async Task<List<ResponseDto>> GetPromptHistoryAsync(string ? category, DateTime? sort, DateTime? startDate)
     {
         // get prompt history from repository put them in query
         var query = await _repository.GetPromptHistoryAsync();
@@ -28,8 +28,15 @@ public class ContentApiService : IContentApiService
         // if we have category, get all propmt with that category and put it in query
         if(!string.IsNullOrEmpty(category))
             query = query.Where(p => p.Category == category);
+        
+        if(sort != null)
+            query = query.Where(p => p.CreatedAt  >= sort);
+        
+        if(startDate != null)
+            query = query.Where(p => p.CreatedAt >= startDate);
+        
         // return a dto response in a list. 
-        return query.Select(p => new ResponseDto(p.Id,p.Message, p.Response, p.Category, p.CreatedAt)).ToList();
+        return await query.Select(p => new ResponseDto(p.Id,p.Message, p.Response, p.Category, p.CreatedAt)).ToListAsync();
     }
     
     public async Task<ResponseDto> CreatePromptHistoryAsync(RequestDto dto)

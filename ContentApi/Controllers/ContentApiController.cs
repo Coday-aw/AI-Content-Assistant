@@ -26,9 +26,9 @@ public class ContentApiController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ResponseDto>> GetPromptHistoryAsync([FromQuery]string? category)
+    public async Task<ActionResult<ResponseDto>> GetPromptHistoryAsync([FromQuery]string? category, [FromBody] DateTime? sort, [FromQuery] DateTime? startDate)
     {
-        var response = await _contentApiService.GetPromptHistoryAsync(category);
+        var response = await _contentApiService.GetPromptHistoryAsync(category, sort, startDate);
         return Ok(response);
     }
 
