@@ -4,4 +4,3 @@
 POST {{LLM_Api_HostAddress}}/api/proxyllm
 Content-Type: application/json
 
-"hur många männsikor lever i sverige"
