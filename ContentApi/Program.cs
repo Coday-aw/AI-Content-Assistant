@@ -15,7 +15,12 @@ builder.Services.AddScoped<IContentApiRepository, ContentApiRepository>();
 builder.Services.AddHttpClient<IContentApiService, ContentApiService>(client =>
     {
         var config = builder.Configuration;
+        var secretKey = config["ProxyApi:SecretKey"]; 
         client.BaseAddress = new Uri(config["ProxyApi:BaseUrl"] ?? throw new InvalidOperationException("ProxyApi.BaseUrl is missing"));
+        if(!string.IsNullOrEmpty(secretKey)) 
+        {
+           client.DefaultRequestHeaders.Add("ApiKey", secretKey);
+        }
     })
     .AddPolicyHandler(Policy<HttpResponseMessage>
         .Handle<HttpRequestException>()

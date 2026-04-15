@@ -11,13 +11,13 @@ public class ContentApiService : IContentApiService
 {
     private readonly IContentApiRepository _repository;
     private readonly HttpClient _httpClient;
-    private readonly string? _secretKey;
+    private readonly ILogger<ContentApiService> _logger;
     
-    public ContentApiService(IContentApiRepository repository,  HttpClient httpClient, IConfiguration config)
+    public ContentApiService(IContentApiRepository repository,  HttpClient httpClient, ILogger<ContentApiService> logger)
     {
         _repository = repository;
         _httpClient = httpClient;
-        _secretKey = config["ProxyApi:SecretKey"];
+        _logger = logger;
     }
 
     public async Task<List<ResponseDto>> GetPromptHistoryAsync(string ? category, DateTime? sort, DateTime? startDate)
@@ -47,8 +47,6 @@ public class ContentApiService : IContentApiService
         LlmResponseDto? result;
         try
         {
-            // send secret key in head 
-            _httpClient.DefaultRequestHeaders.Add("ApiKey", _secretKey);
             // post to the proxy api 
             var httpResponse = await _httpClient.PostAsJsonAsync("api/proxyllm",  message);
             // make sure the response is successful 
@@ -59,11 +57,15 @@ public class ContentApiService : IContentApiService
         }
         catch (HttpRequestException e)
         { 
+            _logger.LogError(e,"Error calling proxy API");
             throw new ProxyApiUnavailableException("Api is unavailable, please try again later", e);
         }
-        
+
         if (result == null)
-            throw new ProxyApiUnavailableException("Api returned empty content");
+        {
+            _logger.LogWarning("Proxy API returned null response");
+            throw new ProxyApiUnavailableException("Api returned empty content");    
+        }
         
         // create new prompt history entity
         var newPromptHistory = new PromptHistory
